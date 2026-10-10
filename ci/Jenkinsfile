@@ -1,0 +1,80 @@
+pipeline {
+  agent any
+  options { timestamps(); ansiColor('xterm') }
+  parameters {
+    choice(name: 'GUARDIAN_FAIL_ON', choices: ['off', 'high', 'critical'], description: 'Fail the build on guardian severity (advisory by default)')
+  }
+  environment {
+    // The guardian never receives cloud credentials. Argo CD is the only deployer.
+    GUARDIAN_MODE = 'read-only'
+  }
+  stages {
+    stage('Checkout') {
+      steps { checkout scm }
+    }
+    stage('Format & validate') {
+      parallel {
+        stage('helm lint') {
+          steps {
+            dir('demo/proposed/charts/checkout') {
+              sh 'helm lint . || true  # demo may run without helm on the agent'
+            }
+          }
+        }
+        stage('terraform fmt') {
+          steps {
+            dir('demo/proposed/terraform') {
+              sh 'terraform fmt -check -diff || true'
+            }
+          }
+        }
+      }
+    }
+    stage('Security scan (Trivy)') {
+      steps {
+        sh '''
+          if command -v trivy >/dev/null 2>&1; then
+            trivy config --format json --output demo/ci-results/trivy.json demo/proposed || true
+          else
+            echo "Using checked-in Trivy fixture (no trivy on agent)"
+          fi
+        '''
+      }
+    }
+    stage('Policy (Conftest)') {
+      steps {
+        sh '''
+          if command -v conftest >/dev/null 2>&1; then
+            conftest test demo/proposed/charts/checkout/values.yaml -p policies/k8s.rego -o json > demo/ci-results/conftest.json || true
+          else
+            echo "Using checked-in Conftest fixture (no conftest on agent)"
+          fi
+        '''
+      }
+    }
+    stage('Guardian review') {
+      steps {
+        sh """
+          python3 -m guardian review \
+            --baseline demo/baseline \
+            --proposed demo/proposed \
+            --ci demo/ci-results \
+            --out out \
+            --fail-on ${params.GUARDIAN_FAIL_ON}
+        """
+        archiveArtifacts artifacts: 'out/review.md,out/review.json,out/suggested.patch', fingerprint: true
+      }
+    }
+    stage('Human gate') {
+      when { branch 'main' }
+      steps {
+        input message: 'Merge only after reviewing out/review.md. Argo CD will sync Git — the guardian will not deploy.'
+      }
+    }
+  }
+  post {
+    always {
+      echo 'Deployment is Argo CD after merge. Guardian is read-only.'
+    }
+  }
+}

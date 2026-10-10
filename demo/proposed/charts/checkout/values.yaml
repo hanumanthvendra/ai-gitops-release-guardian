@@ -1,0 +1,32 @@
+replicaCount: 3
+
+image:
+  repository: ghcr.io/example/checkout
+  tag: "1.4.2"
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 64Mi
+  limits:
+    cpu: 500m
+    memory: 128Mi
+
+service:
+  type: LoadBalancer
+  port: 8080
+  annotations:
+    service.beta.kubernetes.io/aws-load-balancer-scheme: internet-facing
+
+ingress:
+  enabled: true
+  className: alb
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+  hosts:
+    - host: checkout.example.com
+      paths:
+        - path: /
+          pathType: Prefix

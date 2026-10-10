@@ -1,0 +1,12 @@
+[project]
+name = "ai-gitops-release-guardian"
+version = "0.1.0"
+description = "Evidence-based AI risk reviews for Terraform and Kubernetes GitOps changes"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+claude = ["anthropic"]
+
+[tool.setuptools.packages.find]
+include = ["guardian*"]

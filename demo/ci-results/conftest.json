@@ -1,0 +1,24 @@
+[
+  {
+    "filename": "charts/checkout/values.yaml",
+    "failures": [
+      {
+        "msg": "POL-MEM-FLOOR: memory limit 128Mi is below 256Mi — OOM risk on checkout",
+        "metadata": { "id": "POL-MEM-FLOOR" }
+      },
+      {
+        "msg": "POL-LB-PUBLIC: internet-facing LoadBalancer is not allowed on app Services",
+        "metadata": { "id": "POL-LB-PUBLIC" }
+      }
+    ]
+  },
+  {
+    "filename": "terraform/iam.tf",
+    "failures": [
+      {
+        "msg": "POL-IAM-WILDCARD: IAM Action/Resource wildcards violate least privilege",
+        "metadata": { "id": "POL-IAM-WILDCARD" }
+      }
+    ]
+  }
+]

@@ -1,0 +1,10 @@
+{
+  "application": "checkout",
+  "project": "default",
+  "sync": "OutOfSync",
+  "health": "Healthy",
+  "revision": "main@baseline",
+  "autoSync": false,
+  "operation": null,
+  "note": "Read-only context for the guardian MCP tools. Syncing is Argo CD after a human merge — this payload is never a deploy API."
+}

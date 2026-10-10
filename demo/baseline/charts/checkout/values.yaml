@@ -1,0 +1,31 @@
+replicaCount: 3
+
+image:
+  repository: ghcr.io/example/checkout
+  tag: "1.4.2"
+  pullPolicy: IfNotPresent
+
+resources:
+  requests:
+    cpu: 200m
+    memory: 512Mi
+  limits:
+    cpu: 500m
+    memory: 1Gi
+
+service:
+  type: ClusterIP
+  port: 8080
+  annotations: {}
+
+ingress:
+  enabled: true
+  className: alb
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internal
+    alb.ingress.kubernetes.io/target-type: ip
+  hosts:
+    - host: checkout.internal.example.com
+      paths:
+        - path: /
+          pathType: Prefix

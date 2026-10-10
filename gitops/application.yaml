@@ -1,0 +1,22 @@
+# Argo CD Application — the only component that reconciles the cluster.
+# The guardian reviews PRs and suggests patches. It has no sync hook.
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: checkout
+  namespace: argocd
+  annotations:
+    notifications.argoproj.io/subscribe.on-sync-succeeded.slack: platform
+spec:
+  project: default
+  source:
+    repoURL: https://github.com/hanumanthvendra/ai-gitops-release-guardian.git
+    targetRevision: main
+    path: demo/baseline/charts/checkout
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: checkout
+  syncPolicy:
+    automated: null   # human merge is the promotion; no auto-sync on this demo
+    syncOptions:
+      - CreateNamespace=true

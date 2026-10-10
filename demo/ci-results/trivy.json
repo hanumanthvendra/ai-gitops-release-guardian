@@ -1,0 +1,45 @@
+{
+  "SchemaVersion": 2,
+  "CreatedAt": "2026-10-10T08:00:00Z",
+  "ArtifactName": "demo/proposed",
+  "Results": [
+    {
+      "Target": "charts/checkout/values.yaml",
+      "Class": "config",
+      "Type": "kubernetes",
+      "MisconfSummary": { "Failures": 2, "Successes": 4 },
+      "Misconfigurations": [
+        {
+          "ID": "KSV011",
+          "AVDID": "AVD-KSV-0011",
+          "Title": "Memory limit is too low for a JVM/payments workload",
+          "Severity": "HIGH",
+          "Message": "container memory limit 128Mi is below the 256Mi platform floor — likely OOMKilled",
+          "Status": "FAIL"
+        },
+        {
+          "ID": "KSV-PUBLIC-SVC",
+          "Title": "Service publishes a public load balancer",
+          "Severity": "CRITICAL",
+          "Message": "service.type LoadBalancer with aws-load-balancer-scheme internet-facing",
+          "Status": "FAIL"
+        }
+      ]
+    },
+    {
+      "Target": "terraform/iam.tf",
+      "Class": "config",
+      "Type": "terraform",
+      "Misconfigurations": [
+        {
+          "ID": "AVD-AWS-0057",
+          "AVDID": "AVD-AWS-0057",
+          "Title": "IAM policy documents should not use wildcard actions or resources",
+          "Severity": "CRITICAL",
+          "Message": "Action includes s3:* and iam:* on Resource *",
+          "Status": "FAIL"
+        }
+      ]
+    }
+  ]
+}
