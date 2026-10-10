@@ -1,21 +1,14 @@
 # LinkedIn post — AI GitOps Release Guardian
 
-Shipping an AI that can `kubectl apply` is a demo. Shipping one that **cannot**, and still changes how you review a PR, is the platform story.
+**Diagram (same as the portfolio motion diagram)**  
+- Open in a browser: `linkedin/architecture.html`  
+  ```bash
+  open linkedin/architecture.html
+  ```
+- Live: https://hanumanthvendra.github.io/gitops-release-guardian/  
+- PNG to upload: `linkedin/architecture.png` (screenshot of that same diagram)
 
-I built a **GitOps Release Guardian** that sits in CI next to Helm lint, Terraform fmt, Trivy, and policy tests.
+**Caption:** copy `linkedin/POST-DESCRIPTION.txt` into the LinkedIn composer. Attach the PNG. Put the repo URL in the first comment (LinkedIn ranks that better than a link in the post).
 
-A pull request that:
-
-- cuts a service memory limit (OOM risk)
-- opens a public load balancer
-- grants `s3:*` / `iam:*` on `*`
-
-…gets a short report: **what changed**, **what could go wrong**, **which files and CI checks support each finding**, and a **suggested patch**.
-
-The model only narrates. Detectors own the findings. A human merges. **Argo CD deploys.** The agent never syncs the cluster.
-
-That’s the split I want in production AI + DevOps: intelligence on the review, control on the release.
-
-`make test && make demo` — laptop, no cluster, no API key.
-
-#GitOps #Kubernetes #Terraform #ArgoCD #Jenkins #PlatformEngineering #DevSecOps
+Repo: https://github.com/hanumanthvendra/ai-gitops-release-guardian  
+Diagram: https://hanumanthvendra.github.io/gitops-release-guardian/

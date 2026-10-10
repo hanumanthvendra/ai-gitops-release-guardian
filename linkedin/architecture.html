@@ -25,7 +25,7 @@
 <meta name="twitter:image" content="https://hanumanthvendra.github.io/assets/images/og-image.png">
 
 <meta name="theme-color" content="#0a1014">
-<link rel="icon" href="https://hanumanthvendra.github.io/assets/images/favicon.svg" type="image/svg+xml">
+<link rel="icon" href="/assets/images/favicon.svg" type="image/svg+xml">
 
 <script>
 (function(){try{var t=localStorage.getItem('theme');
@@ -225,6 +225,13 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
   .run .c { color: var(--ink); }
   .run .cm { color: var(--faint); }
   .run div { white-space: nowrap; }
+  .links { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 10px; }
+  .links a {
+    font-family: var(--mono); font-size: 12.5px; color: var(--ink); text-decoration: none;
+    border: 1px solid var(--hair-strong); background: var(--panel);
+    border-radius: 999px; padding: 8px 14px;
+  }
+  .links a:hover { border-color: var(--accent); color: var(--accent); }
   footer {
     margin-top: 34px; padding-top: 20px; border-top: 1px solid var(--hair);
     display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
@@ -239,7 +246,7 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
 <body>
 
 <nav class="topnav" aria-label="Site">
-  <a class="brand" href="https://hanumanthvendra.github.io/gitops-release-guardian/"><span class="ar">←</span> Venkata Hanumanth Vendra</a>
+  <a class="brand" href="/"><span class="ar">←</span> Venkata Hanumanth Vendra</a>
   <button class="theme-toggle" id="themeBtn" type="button" aria-label="Toggle light or dark theme">
     <span id="themeIc">☾</span> <span id="themeLbl">Dark</span>
   </button>
@@ -393,6 +400,11 @@ document.documentElement.setAttribute('data-theme',t);}catch(e){}})();
       <div><span class="cm"># laptop — no cluster, no API key</span></div>
       <div><span class="p">$</span> <span class="c">make test</span>&nbsp;&nbsp;&nbsp;<span class="cm"># three findings, patch clears them, no apply in guardian/</span></div>
       <div><span class="p">$</span> <span class="c">make demo</span>&nbsp;&nbsp;<span class="cm"># BLOCK the risky PR, then re-review the safer tree</span></div>
+    </div>
+    <div class="links">
+      <a href="https://github.com/hanumanthvendra/ai-gitops-release-guardian" rel="noopener">Repo</a>
+      <a href="/rag-incident-copilot/">Incident copilot →</a>
+      <a href="/gitops-argocd-helm/">GitOps Helm →</a>
     </div>
   </div>
 

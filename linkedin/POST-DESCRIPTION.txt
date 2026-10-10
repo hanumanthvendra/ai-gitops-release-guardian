@@ -1,0 +1,35 @@
+An AI that can kubectl-apply is a demo. An AI that cannot — and still changes how you review a PR — is the platform story.
+
+I built a GitOps Release Guardian that sits in CI next to Helm lint, Terraform fmt, Trivy, and policy tests. It reviews the proposed change, cites the files and CI checks, and suggests a safer patch. Argo CD remains the deployer. The model never applies.
+
+The idea, in three parts 👇
+
+1️⃣ Detectors own the findings
+A pull request that cuts a service memory limit, opens a public load balancer, and grants s3:* / iam:* on * still looks like “just values.” The guardian flags each concern from the diff — REL-MEM-001, SEC-LB-002, SEC-IAM-003 — not from the model’s memory.
+
+2️⃣ Evidence, not vibes
+Every finding cites the file and line, the unified diff, and the CI that already fired: Trivy KSV011 / KSV-PUBLIC-SVC / AVD-AWS-0057, Conftest POL-MEM-FLOOR / POL-LB-PUBLIC / POL-IAM-WILDCARD. A reviewer can verify before merge.
+
+3️⃣ Suggested patch, human merge, GitOps deploy
+It writes a unified diff: restore ClusterIP + internal scheme, restore the memory floor, scope IAM to s3:GetObject on the receipts bucket. A human approves. Argo CD syncs Git. There is no apply tool and no app sync.
+
+The demo PR:
+
+• Checkout memory 512Mi/1Gi → 64Mi/128Mi → BLOCK (OOM risk)
+• service.type LoadBalancer + internet-facing → BLOCK
+• IAM wildcards on Resource * → BLOCK
+• Re-review of the patched tree → ALLOW
+
+The LLM only narrates. Swap the mock for Claude with an API key — findings and patch stay identical.
+
+The split I want in production AI + DevOps: intelligence on the review, control on the release. CI still scans. GitOps still deploys. The agent never touches the cluster.
+
+After ~10 years in production: the interesting question isn’t “can the agent ship?” It’s “what happens when it’s confidently wrong on a values.yaml?” Put the answer in detectors, policy, and a human gate — not in the prompt.
+
+Runnable on a laptop. No cluster, no API key:
+
+make test && make demo
+
+Repo + live motion diagram 👇 in the comments. What would you refuse to let an agent merge without evidence?
+
+#GitOps #Kubernetes #Terraform #ArgoCD #Jenkins #PlatformEngineering #DevSecOps #AI #DevOps #SRE #Helm #Trivy
