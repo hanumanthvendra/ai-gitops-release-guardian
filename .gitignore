@@ -5,3 +5,4 @@ __pycache__/
 out/
 api-key.txt
 .DS_Store
+linkedin/

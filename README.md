@@ -6,7 +6,7 @@ A Jenkins (or local) pipeline runs fmt/validate, Trivy, and policy tests. The gu
 
 Runs on a laptop. No cluster, no cloud account, no bill.
 
-**Architecture:** [docs/architecture.md](docs/architecture.md) · motion diagram [`linkedin/architecture.html`](linkedin/architecture.html)
+**Architecture:** [docs/architecture.md](docs/architecture.md) · motion diagram https://hanumanthvendra.github.io/gitops-release-guardian/
 
 ```mermaid
 flowchart LR

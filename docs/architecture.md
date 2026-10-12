@@ -2,7 +2,7 @@
 
 The guardian is a **read-only review stage** in an existing GitOps path. Jenkins still lint-scans-policy. Argo CD still deploys. The model never applies Terraform and never syncs an Application.
 
-Motion diagram (open in a browser): [`linkedin/architecture.html`](../linkedin/architecture.html)
+Motion diagram (open in a browser): https://hanumanthvendra.github.io/gitops-release-guardian/
 
 ## System context
 
